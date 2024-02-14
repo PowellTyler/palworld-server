@@ -7,6 +7,9 @@ install:
 	install -d palserver_updater/config/config.ini /etc/palserver/config.ini
 	cp palserver_updater /usr/shared/pyshared/
 
+init:
+	mkdir /var/lib/palserver
+
 docker-build:
 	podman build -t $(NAME) .
 
