@@ -1,2 +1,1 @@
-RUN install palserver.service /lib/systemd/system/palserver.service
-RUN install palserver-update.service /lib/systemd/system/palserver-update.service
+FROM ubuntu:22.04
