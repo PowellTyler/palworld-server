@@ -11,7 +11,7 @@ docker-build:
 	podman build -t $(NAME) .
 
 docker-run:
-	podman run -dit -p $(PORT):$(PORT) --network=host --dns 8.8.8.8 --name $(NAME) $(NAME)
+	podman run -dit -p $(PORT):$(PORT) --name $(NAME) $(NAME)
 
 docker-ssh:
 	podman attach $(NAME)
