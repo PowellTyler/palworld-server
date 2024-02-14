@@ -1,0 +1,15 @@
+[Unit]
+Description=Palworld Dedicated Server Maintainer by Mayfries
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=steam
+Group=steam
+Environment="templdpath=$LD_LIBRARY_PATH"
+Environment="LD_LIBRARY_PATH=/home/steam/:$LD_LIBRARY_PATH"
+Environment="SteamAppId=2394010"
+ExecStart=/usr/bin/python3 /home/steam/palworld-server/palserver_updater
+
+[Install]
+WantedBy=multi-user.target
