@@ -2,11 +2,16 @@ NAME := palserver
 PORT := 8081
 
 install:
-	install palserver.service /lib/systemd/system/palserver.service
-	install palserver-update.service /lib/systemd/system/palserver-update.service
+	install package/palserver.service /lib/systemd/system/palserver.service
+	install package/palserver-update.service /lib/systemd/system/palserver-update.service
+	install -d palserver_updater/config/config.ini /etc/palserver/config.ini
+	cp palserver_updater /usr/shared/pyshared/
 
 docker-build:
-	podman build -t ${NAME} .
+	podman build -t $(NAME) .
 
 docker-run:
-	podman run -p $(PORT):$(PORT) --name $(NAME) $(NAME)
+	podman run -dit -p $(PORT):$(PORT) --name $(NAME) $(NAME)
+
+docker-ssh:
+	podman attach $(NAME)
