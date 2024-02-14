@@ -1,5 +1,6 @@
 FROM ubuntu
 
+RUN mkdir /usr/lib/palserver
 RUN useradd steam -m
 RUN add-apt-repository multiverse; dpkg --add-architecture i386; apt update
 RUN apt install curl -y
