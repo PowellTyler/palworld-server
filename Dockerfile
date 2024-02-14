@@ -1,8 +1,10 @@
 FROM ubuntu
 
-RUN sudo useradd steam steam
-RUN sudo add-apt-repository multiverse; sudo dpkg --add-architecture i386; sudo apt update
-RUN sudo apt install steamcmd
-RUN sudo -H -u steam bash -c "steamcmd +login anonymous +app_update 2394010 validate +quit"
+RUN useradd steam -m
+RUN add-apt-repository multiverse; dpkg --add-architecture i386; apt update
+
+RUN echo steam steam/question select "I AGREE" | debconf-set-selections
+RUN echo steam steam;license note '' | debconf-set-selections
+RUN apt install steamcmd -y
 
 EXPOSE 8080
