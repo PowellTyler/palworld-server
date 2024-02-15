@@ -1,5 +1,5 @@
 NAME := palserver
-PORT := 8081
+PORT := 8211
 
 install:
 	install package/palserver.service /lib/systemd/system/palserver.service
