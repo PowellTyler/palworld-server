@@ -9,7 +9,7 @@ Group=steam
 Environment="templdpath=$LD_LIBRARY_PATH"
 Environment="LD_LIBRARY_PATH=/home/steam/:$LD_LIBRARY_PATH"
 Environment="SteamAppId=2394010"
-ExecStart=/usr/bin/python3 /usr/shared/pyshared/palserver_updater
+ExecStart=/usr/bin/python3 /usr/lib/palserver/palserver_updater
 
 [Install]
 WantedBy=multi-user.target
