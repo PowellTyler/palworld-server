@@ -6,6 +6,7 @@ install:
 	install package/palserver-update.service /lib/systemd/system/palserver-update.service
 	install -d /etc/palserver/
 	install package/config.ini /etc/palserver/config.ini
+	chown steam -R /home/steam/Steam
 	su - steam -c "steamcmd +login anonymous +app_update 2394010 validate +quit"
 
 init:
