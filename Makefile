@@ -5,7 +5,7 @@ install:
 	install package/palserver.service /lib/systemd/system/palserver.service
 	install package/palserver-update.service /lib/systemd/system/palserver-update.service
 	install -d /etc/palserver/
-	install palserver_updater/config/config.ini /etc/palserver/config.ini
+	install package/config.ini /etc/palserver/config.ini
 
 init:
 	mkdir /var/lib/palserver
