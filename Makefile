@@ -17,7 +17,6 @@ docker-build:
 
 docker-run:
 	podman run -dit -p $(PORT):$(PORT) -v .:/usr/lib/$(NAME) -v /var/lib/$(NAME)/mount:/home/steam/Steam/steamapps/common/PalServer --name $(NAME) $(NAME)
-	podman exec $(NAME) /bin/sh -c 'cd /usr/lib/palserver; make install'
 
 docker-ssh:
 	podman attach $(NAME)

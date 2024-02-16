@@ -14,3 +14,6 @@ class ServerManager(Task):
 
 server_manager = ServerManager()
 server_manager.start()
+
+while True:
+    sleep(10)
