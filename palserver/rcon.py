@@ -26,8 +26,8 @@ class RCON:
 
     def _run(self, command, *args):
         # TODO: Handle errors from running RCON command
-        full_command = ['ARRCON', '-S', self._label, command] + args
-        process = subprocess.Popen(full_command, user='steam', stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        full_command = ['su', '-', 'steam', '-c', f'"ARRCON -S {self._label} command {' '.join(*args)}"']
+        process = subprocess.Popen(full_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = process.communicate()
         return out
 
