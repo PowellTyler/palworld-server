@@ -10,13 +10,13 @@ install:
 	chown steam:steam -R /home/steam/Steam
 
 init:
-	mkdir /var/lib/palserver
+	mkdir /var/lib/palserver/mount
 
 docker-build:
 	podman build -t $(NAME) .
 
 docker-run:
-	podman run -dit -p $(PORT):$(PORT) -v .:/usr/lib/$(NAME) -v /var/lib/$(NAME)/mount:/home/steam/Steam/steamapps/common/PalServer/Pal/Saved --name $(NAME) $(NAME)
+	podman run -dit -p $(PORT):$(PORT) -v .:/usr/lib/$(NAME) -v /var/lib/$(NAME)/mount:/home/steam/Steam/steamapps/common/PalServer --name $(NAME) $(NAME)
 	podman exec $(NAME) /bin/sh -c 'cd /usr/lib/palserver; make install'
 
 docker-ssh:
