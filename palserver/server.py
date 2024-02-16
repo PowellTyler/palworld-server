@@ -33,6 +33,10 @@ class Server():
         if not self.is_installed:
             self.install_or_update_server()
 
+            if not self.is_installed:
+                log.error('event=server_start result=failure event_details=unable_to_install_server_app')
+                raise OSError('Unable to download server app')
+
         self._server_task.start()
         log.info('event=start_server result=success')
 
@@ -74,9 +78,9 @@ class Server():
 
     def install_or_update_server(self):
         log.info('event=server_install_or_update event_details=started')
-        update_command = f'{config["steamcmd"]["path"]} +force_install_dir \"{config["server"]["game_root"]}\" +login anonymous +app_update {self._app_id} validate +quit'
+        update_command = f'{config["steamcmd"]["path"]} +login anonymous +app_update {self._app_id} validate +quit'
         success_grep_command = 'grep Success!'
-        update_process = subprocess.Popen(update_command.split(' '), user='steam', stdout=subprocess.PIPE)
+        update_process = subprocess.Popen(['sudo', '-', 'steam', '-c', f'"{update_command}"'], user='steam', stdout=subprocess.PIPE)
         grep_output = subprocess.check_output(success_grep_command.split(' '), stdin=update_process.stdout)
         update_process.wait()
 
