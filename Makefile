@@ -5,7 +5,7 @@ PYTHON:= python3.10
 install:
 	mkdir -p /var/lib/palserver/mount
 	mkdir -p /var/log/$(NAME)
-	install /var/log/$(NAME)/access.log
+	echo > /var/log/$(NAME)/access.log
 	install package/palserver.service /lib/systemd/system/palserver.service
 
 docker-build:
@@ -23,3 +23,9 @@ docker-install:
 	install -d /etc/palserver/
 	install package/config.ini /etc/palserver/config.ini
 	chown steam:steam -R /home/steam/Steam
+	chown steam:steam -R /var/log/$(NAME)
+	chown steam:steam -R /usr/lib/$(NAME)
+
+	chmod 755 -r /home/steam/Steam
+	chmod 755 -r /var/log/$(NAME)
+	chmod 755 -r /usr/lib/$(NAME)
