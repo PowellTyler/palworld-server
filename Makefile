@@ -26,9 +26,4 @@ docker-install:
 	mkdir -p /var/lib/palserver/storage
 
 	chown steam:steam -R /home/steam/Steam
-	chown steam:steam -R /var/log/$(NAME)
-	chown steam:steam -R /usr/lib/$(NAME)
-
 	chmod 755 -R /home/steam/Steam
-	chmod 755 -R /var/log/$(NAME)
-	chmod 755 -R /usr/lib/$(NAME)

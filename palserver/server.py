@@ -76,7 +76,7 @@ class Server():
         log.info('event=server_install_or_update event_details=started')
         update_command = f'{config["steamcmd"]["path"]} +force_install_dir \"{config["server"]["game_root"]}\" +login anonymous +app_update {self._app_id} validate +quit'
         success_grep_command = 'grep Success!'
-        update_process = subprocess.Popen(update_command.split(' '), stdout=subprocess.PIPE)
+        update_process = subprocess.Popen(update_command.split(' '), user='steam', stdout=subprocess.PIPE)
         grep_output = subprocess.check_output(success_grep_command.split(' '), stdin=update_process.stdout)
         update_process.wait()
 

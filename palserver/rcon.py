@@ -22,12 +22,14 @@ class RCON:
             ip = config['rcon']['ip']
             port = config['rcon']['port']
             password = config['rcon']['password']
-            subprocess.run(['ARRCON', '-H', ip, '-P', port, '-p', password, '--save-host', _rcon_label])
+            subprocess.run(['ARRCON', '-H', ip, '-P', port, '-p', password, '--save-host', config['rcon']['label']])
 
     def _run(self, command, *args):
         # TODO: Handle errors from running RCON command
         full_command = ['ARRCON', '-S', self._label, command] + args
-        return subprocess.check_output(full_command)
+        process = subprocess.Popen(full_command, user='steam', stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        out, err = process.communicate()
+        return out
 
     def save(self):
         self._run('save')
