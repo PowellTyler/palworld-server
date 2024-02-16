@@ -54,7 +54,7 @@ class Logger:
         
         self._log(WARN, message, exc_info)
 
-    def error(self, message, exc_info=False);
+    def error(self, message, exc_info=False):
         if self._level_map[self._level] > self._level_map[ERROR]:
             return
         

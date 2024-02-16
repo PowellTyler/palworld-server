@@ -9,6 +9,8 @@ install:
 	install package/palserver-update.service /lib/systemd/system/palserver-update.service
 	install -d /etc/palserver/
 	install package/config.ini /etc/palserver/config.ini
+	install -d /var/log/$(NAME)
+	install /var/log/$(NAME)/access.log
 	chown steam:steam -R /home/steam/Steam
 
 init:
