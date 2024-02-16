@@ -37,25 +37,25 @@ class Logger:
         self._level = level
 
     def debug(self, message, exc_info=False):
-        if self._level_map[self._level] > self._level_map[DEBUG]:
+        if self._level_value_map[self._level] > self._level_value_map[DEBUG]:
             return
         
         self._log(DEBUG, message, exc_info)
 
     def info(self, message, exc_info=False):
-        if self._level_map[self._level] > self._level_map[INFO]:
+        if self._level_value_map[self._level] > self._level_value_map[INFO]:
             return
         
         self._log(INFO, message, exc_info)
 
     def warn(self, message, exc_info=False):
-        if self._level_map[self._level] > self._level_map[WARN]:
+        if self._level_value_map[self._level] > self._level_value_map[WARN]:
             return
         
         self._log(WARN, message, exc_info)
 
     def error(self, message, exc_info=False):
-        if self._level_map[self._level] > self._level_map[ERROR]:
+        if self._level_value_map[self._level] > self._level_value_map[ERROR]:
             return
         
         self._log(ERROR, message, exc_info)
