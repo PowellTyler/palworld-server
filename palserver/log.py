@@ -26,9 +26,9 @@ class Logger:
 
     def _log(self, level, message, exc_info=False):
         with open(self._log_path, 'a') as log_file:
-            log_file.write(f'{datetime.datetime.now().strftime("%b %d %H:%M%S")} {self.service_name} [{level}] {message}')
+            log_file.write(f'{datetime.datetime.now().strftime("%b %d %H:%M:%S")} {self.service_name} [{level}] {message}\n')
             if exc_info:
-                log_file.write(f'{datetime.datetime.now().strftime("%b %d %H:%M%S")} {self.service_name} [{level}] {traceback.format_exc()}')
+                log_file.write(f'{datetime.datetime.now().strftime("%b %d %H:%M:%S")} {self.service_name} [{level}] {traceback.format_exc()}\n')
 
     def set_level(self, level):
         if level not in [INFO, WARN, DEBUG, ERROR]:

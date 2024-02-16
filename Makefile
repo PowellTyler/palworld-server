@@ -22,10 +22,13 @@ docker-install:
 	install package/ARRCON /usr/bin/ARRCON
 	install -d /etc/palserver/
 	install package/config.ini /etc/palserver/config.ini
+
+	mkdir -p /var/lib/palserver/storage
+
 	chown steam:steam -R /home/steam/Steam
 	chown steam:steam -R /var/log/$(NAME)
 	chown steam:steam -R /usr/lib/$(NAME)
 
-	chmod 755 -r /home/steam/Steam
-	chmod 755 -r /var/log/$(NAME)
-	chmod 755 -r /usr/lib/$(NAME)
+	chmod 755 -R /home/steam/Steam
+	chmod 755 -R /var/log/$(NAME)
+	chmod 755 -R /usr/lib/$(NAME)

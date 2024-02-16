@@ -1,3 +1,3 @@
 cd /usr/lib/palserver
 make docker-install
-python3.10 palserver
+su -u steam -c "python3.10 palserver"

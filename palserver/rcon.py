@@ -16,6 +16,13 @@ class RCON:
 
     def __init__(self):
         self._label = config['rcon']['label']
+        output = subprocess.check_output(['ARRCON', '-l']).decode('utf-8')
+
+        if config['rcon']['label'] not in output:
+            ip = config['rcon']['ip']
+            port = config['rcon']['port']
+            password = config['rcon']['password']
+            subprocess.run(['ARRCON', '-H', ip, '-P', port, '-p', password, '--save-host', _rcon_label])
 
     def _run(self, command, *args):
         # TODO: Handle errors from running RCON command

@@ -14,5 +14,3 @@ RUN apt install steamcmd -y
 EXPOSE 8211/udp
 # RCON
 EXPOSE 25575/tcp
-
-ENTRYPOINT [ "/bin/sh", "/usr/lib/palserver/init.sh" ]
