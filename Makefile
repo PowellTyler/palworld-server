@@ -1,7 +1,9 @@
 NAME := palserver
 PORT := 8211
+PYTHON:= python3.10
 
 install:
+	$(PYTHON) -m pip install -r requirements.txt
 	install package/ARRCON /usr/bin/ARRCON
 	install package/palserver.service /lib/systemd/system/palserver.service
 	install package/palserver-update.service /lib/systemd/system/palserver-update.service
