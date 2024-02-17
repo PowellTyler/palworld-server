@@ -81,7 +81,7 @@ class Server():
         log.info('event=server_install_or_update event_details=started')
         install_command = f'{config["steamcmd"]["path"]} +force_install_dir "/home/steam/Steam/steamapps/common/PalServer" +login anonymous +app_update {self._app_id} validate +quit'
         success_grep_command = 'grep Success!'
-        install_process = subprocess.Popen(install_command.split(' '), shell=True, stdout=subprocess.PIPE)
+        install_process = subprocess.Popen(install_command, shell=True, stdout=subprocess.PIPE)
         grep_output = subprocess.check_output(success_grep_command.split(' '), stdin=install_process.stdout)
         install_process.wait()
 
