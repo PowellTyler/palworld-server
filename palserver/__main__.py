@@ -1,19 +1,7 @@
-from time import sleep
-from tasks.task import Task
+from tasks.manageserver import ManageServerTask
+from tasks.task import start_main_loop
 from server import Server
 
 
-class ServerManager(Task):
-
-    def handler(self):
-        server = Server()
-        server.start_server()
-
-        while True:
-            sleep(10)
-
-server_manager = ServerManager()
-server_manager.start()
-
-while True:
-    sleep(10)
+ManageServerTask(server=Server()).start()
+start_main_loop()

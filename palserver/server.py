@@ -42,6 +42,9 @@ class Server():
         log.info('event=start_server result=success')
 
     def stop_server(self, immediate=False):
+        if not self._server_task.is_running:
+            return
+
         log.debug('event=stop_server event_details=about_to_perform')
         if self._shutdown_in_progress:
             if immediate:
@@ -85,6 +88,19 @@ class Server():
 
         if 'Success!' in out:
             self._update_build_version_file()
+
+    def apply_config(self):
+        log.debug('event=server_apply_config event_details=about_to_perform')
+        settings_template_path = os.path.join(config['module'], 'templates', 'palworld-settings.ini.template')
+        server_settings_path = os.path.join(config['server']['game_root'], config['server']['settings_path'])
+
+        try:
+            with open(settings_template_path, 'r') as template_file:
+                with open(server_settings_path, 'w') as settings_file:
+                    settings_file.write(template_file.read().format(**config['palworld']))
+            log.info(f'event=server_apply_config event_result=success config_path={server_settings_path}')
+        except Exception:
+            log.error('event=server_apply_config event_result=error event_details=unknown_error_possible_missing_permissions', exc_info=True)
 
     def _get_build_version_from_file(self):
         if not os.path.exists(self._buildid_path):

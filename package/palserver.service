@@ -4,11 +4,9 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
-User=steam
-Group=steam
 ExecStart=/usr/bin/podman run -dit -p 8211:8211/udp -v .:/usr/lib/palserver -v /var/lib/palserver/mount:/home/steam/Steam/steamapps/common/PalServer -v /var/log/palserver:/var/log/palserver --name palserver palserver
-ExecStop=/usr/bin/podman stop --ignore -t 10 palserver
-ExecStopPost=/usr/bin/podman rm -f --ignore -t 10 palserver
+ExecStop=/usr/bin/podman stop palserver
+ExecStopPost=/usr/bin/podman rm -f palserver
 Restart=always
 
 [Install]

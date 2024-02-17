@@ -1,3 +1,4 @@
+from time import sleep
 import threading
 
 
@@ -15,3 +16,8 @@ class Task:
 
     def start(self):
         self._task.start()
+
+
+def start_main_loop():
+    while True:
+        sleep(10)
