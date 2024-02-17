@@ -11,7 +11,7 @@ RUN echo steam steam/question select "I AGREE" | debconf-set-selections
 RUN echo steam steam;license note '' | debconf-set-selections
 RUN apt install steamcmd -y
 RUN mkdir -p /home/steam/.steam/sdk64/
-RUN steamcmd +login anonymous +app_update 1007 +quit
+RUN /usr/games/steamcmd +login anonymous +app_update 1007 +quit
 RUN cp ~/Steam/steamapps/common/Steamworks\ SDK\ Redist/linux64/steamclient.so /home/steam/.steam/sdk64/
 
 # Server
