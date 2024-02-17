@@ -9,7 +9,8 @@ RUN apt-get install python3.10 python3-pip -y
 RUN apt install curl -y
 RUN echo steam steam/question select "I AGREE" | debconf-set-selections
 RUN echo steam steam;license note '' | debconf-set-selections
-# RUN su - steam -c apt install steamcmd -y
+RUN apt install steamcmd -y
+RUN mkdir -p /home/steam/.steam/sdk64/
 
 # Server
 EXPOSE 8211/udp
