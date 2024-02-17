@@ -10,7 +10,7 @@ install:
 	echo > /var/log/$(NAME)/access.log
 	install package/palserver.service /lib/systemd/system/palserver.service
 	install package/config.ini /var/lib/palserver/config/
-	docker-build
+	podman build -t $(NAME) .
 
 clean: docker-stop
 	rm -rf /var/lib/$(NAME)
