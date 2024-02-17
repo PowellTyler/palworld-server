@@ -6,11 +6,9 @@ After=network-online.target
 [Service]
 User=steam
 Group=steam
-Environment="templdpath=$LD_LIBRARY_PATH"
-Environment="LD_LIBRARY_PATH=/home/steam/:$LD_LIBRARY_PATH"
-Environment="SteamAppId=2394010"
-ExecStart=/home/steam/Steam/steamapps/common/PalServer/PalServer.sh -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS > /dev/null
-ExecStop=ARRCON -S palworld save
+ExecStart=/usr/bin/podman run -dit -p 8211:8211/udp -v .:/usr/lib/palserver -v /var/lib/palserver/mount:/home/steam/Steam/steamapps/common/PalServer -v /var/log/palserver:/var/log/palserver --name palserver palserver
+ExecStop=/usr/bin/podman stop --ignore -t 10 palserver
+ExecStopPost=/usr/bin/podman rm -f --ignore -t 10 palserver
 Restart=always
 
 [Install]

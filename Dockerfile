@@ -1,11 +1,14 @@
 FROM ubuntu
 
-RUN mkdir /usr/lib/palserver
+ENV APP_NAME=palserver
+ENV PYTHON=python3.10
+
+RUN mkdir /usr/lib/${APP_NAME}
 RUN useradd steam -m
 RUN echo steam > passwd steam
 RUN add-apt-repository multiverse; dpkg --add-architecture i386; apt update
 RUN apt-get install build-essential -y
-RUN apt-get install python3.10 python3-pip -y
+RUN apt-get install ${PYTHON} python3-pip -y
 RUN apt install curl -y
 RUN echo steam steam/question select "I AGREE" | debconf-set-selections
 RUN echo steam steam;license note '' | debconf-set-selections
@@ -18,3 +21,5 @@ RUN cp ~/Steam/steamapps/common/Steamworks\ SDK\ Redist/linux64/steamclient.so /
 EXPOSE 8211/udp
 # RCON
 EXPOSE 25575/tcp
+
+ENTRYPOINT ["/usr/bin/palserver/init.sh"]
