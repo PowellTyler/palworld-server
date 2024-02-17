@@ -2,6 +2,7 @@ FROM ubuntu
 
 RUN mkdir /usr/lib/palserver
 RUN useradd steam -m
+RUN echo steam > passwd steam
 RUN add-apt-repository multiverse; dpkg --add-architecture i386; apt update
 RUN apt-get install build-essential -y
 RUN apt-get install python3.10 python3-pip -y
