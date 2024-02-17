@@ -3,7 +3,9 @@ PORT := 8211
 PYTHON:= python3.10
 
 install:
-	mkdir -p /var/lib/palserver/{config,mount,storage}
+	mkdir -p /var/lib/palserver/config
+	mkdir -p /var/lib/palserver/mount
+	mkdir -p /var/lib/palserver/storage
 	mkdir -p /var/log/$(NAME)
 	echo > /var/log/$(NAME)/access.log
 	install package/palserver.service /lib/systemd/system/palserver.service
