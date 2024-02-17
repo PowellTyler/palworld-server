@@ -22,6 +22,4 @@ docker-install:
 	install package/ARRCON /usr/bin/ARRCON
 	install -d /etc/palserver/
 	install package/config.ini /etc/palserver/config.ini
-	tar -xvzf package steamclient.tar.gz -C /home/steam/.steam/sdk64/
-
 	mkdir -p /var/lib/palserver/storage
