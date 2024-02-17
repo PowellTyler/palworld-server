@@ -16,4 +16,4 @@ config['env'] = {
     'root': '/var/lib/palserver',
     'module': os.path.dirname(os.path.abspath(__file__))
 }
-config['app']['auto_update'] = config['auto_update'].lower() == 'false'
+config['app']['auto_update'] = config['app']['auto_update'].lower() == 'false'
