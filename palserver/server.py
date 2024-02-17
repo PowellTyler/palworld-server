@@ -39,6 +39,7 @@ class Server():
                 log.error('event=server_start result=failure event_details=unable_to_install_server_app')
                 raise OSError('Unable to download server app')
 
+        self.apply_config()
         self._server_task.start()
         log.info('event=start_server result=success')
 

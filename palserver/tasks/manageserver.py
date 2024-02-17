@@ -7,5 +7,4 @@ class ManageServerTask(Task):
         self._server = server
 
     def handler(self):
-        self._server.apply_config()
         self._server.start_server()
