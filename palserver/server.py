@@ -79,8 +79,8 @@ class Server():
 
     def install_or_update_server(self):
         log.info('event=server_install_or_update event_details=started')
-        install_command = f'{config["steamcmd"]["path"]} +force_install_dir "/home/steam/Steam/steamapps/common/PalServer" +login anonymous +app_update {self._app_id} validate +quit'
-        install_process = subprocess.Popen(install_command, shell=True, user='steam', stdout=subprocess.PIPE)
+        install_command = f'su - steam -c "{config["steamcmd"]["path"]} +force_install_dir \"/home/steam/Steam/steamapps/common/PalServer\" +login anonymous +app_update {self._app_id} validate +quit"'
+        install_process = subprocess.Popen(install_command, shell=True, stdout=subprocess.PIPE)
         out, err = install_process.communicate()
 
         if 'Success!' in out:

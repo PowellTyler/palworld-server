@@ -12,7 +12,7 @@ docker-build:
 	podman build -t $(NAME) .
 
 docker-run:
-	podman run -dit -p $(PORT):$(PORT) -v .:/usr/lib/$(NAME) -v /var/lib/$(NAME)/mount:/home/steam/Steam/steamapps/common/PalServer -v /var/log/$(NAME):/var/log/$(NAME) --name $(NAME) $(NAME)
+	podman run -dit -p $(PORT):$(PORT)/udp -v .:/usr/lib/$(NAME) -v /var/lib/$(NAME)/mount:/home/steam/Steam/steamapps/common/PalServer -v /var/log/$(NAME):/var/log/$(NAME) --name $(NAME) $(NAME)
 
 docker-ssh:
 	podman attach $(NAME)
