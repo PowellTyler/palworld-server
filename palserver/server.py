@@ -16,9 +16,10 @@ class Server():
         self._shutdown_in_progress = False
         self._storage_dir = config['app']['storage_dir']
         self._buildid_path = f'{self._storage_dir}/buildid.info'
+        self._game_root = config['server']['game_root']
+        self._server_task = RunServerTask()
         self.shutdown_time = int(config['app']['shutdown_time'])
         self.build_version = self._get_build_version_from_file()
-        self._server_task = RunServerTask()
 
     @property
     def is_installed(self):
@@ -81,8 +82,8 @@ class Server():
         self.start_server()
 
     def install_or_update_server(self):
-        log.info('event=server_install_or_update event_details=started')
-        install_command = f'su - steam -c "{config["steamcmd"]["path"]} +force_install_dir \"/home/steam/Steam/steamapps/common/PalServer\" +login anonymous +app_update {self._app_id} validate +quit"'
+        log.info(f'event=server_install_or_update event_details=started game_root={self._game_root}')
+        install_command = f'su - steam -c "{config["steamcmd"]["path"]} +force_install_dir \"{self._game_root}\" +login anonymous +app_update {self._app_id} validate +quit"'
         install_process = subprocess.Popen(install_command, shell=True, stdout=subprocess.PIPE)
         out, err = install_process.communicate()
 
