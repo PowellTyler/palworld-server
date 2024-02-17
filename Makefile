@@ -12,11 +12,10 @@ install:
 	install package/config.ini /var/lib/palserver/config/
 	docker-build
 
-clean:
+clean: docker-stop
 	rm -rf /var/lib/$(NAME)
 	rm -rf /var/log/$(NAME)
 	rm /lib/systemd/system/palserver.service
-	docker-stop
 	podman rmi $(NAME)
 
 docker-build:
@@ -26,8 +25,8 @@ docker-run:
 	podman run -dit -p $(PORT):$(PORT)/udp -v .:/usr/lib/$(NAME) -v /var/lib/$(NAME):/var/lib/$(NAME) -v /var/log/$(NAME):/var/log/$(NAME) --name $(NAME) $(NAME)
 
 docker-stop:
-	podman stop $(NAME)
-	podman rm -f $(NAME)
+	podman stop --ignore $(NAME)
+	podman rm -f --ignore $(NAME)
 
 docker-ssh:
 	podman attach $(NAME)
