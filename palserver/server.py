@@ -122,5 +122,8 @@ class Server():
         build_id = data.get('depots', {}).get('branches', {}).get('public', {}).get('buildid')
         self.build_version = build_id
 
+        if not os.path.exists(self._storage_dir):
+            os.makedirs(self._storage_dir)
+
         with open(self._buildid_path, 'w') as buildinfo_file:
             buildinfo_file.write(self.build_version)

@@ -22,4 +22,5 @@ docker-install:
 	install package/ARRCON /usr/bin/ARRCON
 	install -d /etc/palserver/
 	install package/config.ini /etc/palserver/config.ini
-	mkdir -p /var/lib/palserver/storage
+
+	chown steam:steam -R /home/steam/
