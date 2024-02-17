@@ -15,7 +15,7 @@ install:
 clean: docker-stop
 	rm -rf /var/lib/$(NAME)
 	rm -rf /var/log/$(NAME)
-	rm /lib/systemd/system/palserver.service
+	rm -f /lib/systemd/system/palserver.service
 	podman rmi $(NAME)
 
 docker-build:
