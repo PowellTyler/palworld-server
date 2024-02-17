@@ -22,4 +22,4 @@ EXPOSE 8211/udp
 # RCON
 EXPOSE 25575/tcp
 
-ENTRYPOINT ["/usr/bin/palserver/init.sh"]
+ENTRYPOINT ["/usr/lib/palserver/init.sh"]
