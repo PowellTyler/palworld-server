@@ -12,6 +12,8 @@ __all__ = ['config']
 #           d = string_list(default=[])
 config = configparser.ConfigParser()
 config.read('/var/lib/palserver/config/config.ini')
-config['root'] = '/var/lib/palserver'
-config['module'] = os.path.dirname(os.path.abspath(__file__))
-config['auto_update'] = config['auto_update'].lower() == 'false'
+config['env'] = {
+    'root': '/var/lib/palserver',
+    'module': os.path.dirname(os.path.abspath(__file__))
+}
+config['app']['auto_update'] = config['auto_update'].lower() == 'false'
