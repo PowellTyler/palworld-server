@@ -1,5 +1,6 @@
 NAME := palserver
 PORT := 8211
+RCON_PORT :=	25575
 PYTHON:= python3.10
 
 install:
@@ -26,7 +27,7 @@ docker-build:
 	podman build -t $(NAME) .
 
 docker-run:
-	podman run -dit -p $(PORT):$(PORT)/udp -v .:/usr/lib/$(NAME) -v /var/lib/$(NAME)/mount:/var/lib/$(NAME) -v /var/log/$(NAME):/var/log/$(NAME) --name $(NAME) $(NAME)
+	podman run -dit -p $(PORT):$(PORT)/udp -p $(RCON_PORT):$(RCON_PORT)/tcp -v .:/usr/lib/$(NAME) -v /var/lib/$(NAME)/mount:/var/lib/$(NAME) -v /var/log/$(NAME):/var/log/$(NAME) --name $(NAME) $(NAME)
 
 docker-stop:
 	podman stop --ignore $(NAME)
