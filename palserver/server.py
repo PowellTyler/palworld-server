@@ -147,7 +147,8 @@ class Server():
         try:
             response = requests.get(url)
         except Exception:
-            log.error('event=server_update_build_version event_result=failure event_details=unable_to_reach_host', exc_info=True)
+            log.error(f'event=server_update_build_version event_result=failure event_details=unable_to_reach_host url={url}', exc_info=True)
+            return
 
         if not (200 <= response.status_code < 300):
             log.error(f'event=server_update_build_version event_result=failure event_details=bad_response_code status_code={response.status_code}')
