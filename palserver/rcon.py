@@ -1,18 +1,10 @@
+from singleton import Singleton
 from config import config
 import subprocess
 from log import log
 
 
-class RCON:
-
-    _instance = None
-
-    @property
-    def instance():
-        if RCON._instance is None:
-            RCON._instance = RCON()
-
-        return RCON._instance
+class RCON(metaclass=Singleton):
 
     def __init__(self):
         self._label = config['rcon']['label']

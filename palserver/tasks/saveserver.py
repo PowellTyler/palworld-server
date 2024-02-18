@@ -19,7 +19,7 @@ class SaveServerTask(Task):
 
         while True:
             if datetime.datetime.now() >= next_check:
-                RCON.instance.save()
+                RCON().save()
                 next_check = datetime.datetime.now() + datetime.timedelta(minutes=config['app']['auto_save'])
                 log.info('event=save_task event_result=success event_details=signal_sent')
             sleep(10)

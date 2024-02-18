@@ -63,20 +63,20 @@ class Server():
         if not immediate:
             self._shutdown_in_progress = True
             shutdown_time_seconds = self.shutdown_time * 60
-            RCON.instance.shutdown_server(shutdown_time_seconds)
+            RCON().shutdown_server(shutdown_time_seconds)
             shutdown_time_10_seconds_remain = datetime.datetime.now() + datetime.timedelta(seconds=(shutdown_time_seconds - 11))
 
             while datetime.datetime.now() < shutdown_time_10_seconds_remain:
                 sleep(1)
                 pass
 
-            RCON.instance.save()
+            RCON().save()
 
             for i in reversed(range(10)):
-                RCON.broadcast(f'SERVER_SHUTTING_DOWN_IN_{i+1}_SECONDS')
+                RCON().broadcast(f'SERVER_SHUTTING_DOWN_IN_{i+1}_SECONDS')
                 sleep(1)
         else:
-            RCON.instance.shutdown_server(seconds=0, message='IMMEDIATE_SHUTDOWN_REQUESTED')
+            RCON().shutdown_server(seconds=0, message='IMMEDIATE_SHUTDOWN_REQUESTED')
 
         while self._server_task.is_running:
             sleep(1)
