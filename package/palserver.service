@@ -4,6 +4,8 @@ Wants=network-online.target
 After=network-online.target
 
 [Service]
+User=root
+Group=root
 Restart=on-failure
 TimeoutStopSec=70
 ExecStartPre=/bin/rm -f /var/lib/palserver/palserver.ctr-id
