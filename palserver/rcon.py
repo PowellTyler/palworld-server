@@ -18,7 +18,7 @@ class RCON(metaclass=Singleton):
 
     def _run(self, command, *args):
         # TODO: Handle errors from running RCON command
-        full_command = ['ARRCON', '-S', self._label, command] + args
+        full_command = ['ARRCON', '-S', self._label, command] + list(args)
         process = subprocess.Popen(full_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = process.communicate()
         return out
