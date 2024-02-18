@@ -33,7 +33,9 @@ class Server():
         
         log.debug('event=start_server event_details=about_to_perform')
 
-        if not self.is_installed:
+        needs_fresh_install = not self.is_installed
+
+        if needs_fresh_install:
             self.install_or_update_server()
 
             if not self.is_installed:
@@ -42,6 +44,7 @@ class Server():
 
         self.apply_config()
         self._server_task.start()
+
         self._stopped = False
         log.info('event=start_server result=success')
 
@@ -72,6 +75,8 @@ class Server():
             for i in reversed(range(10)):
                 RCON.broadcast(f'SERVER_SHUTTING_DOWN_IN_{i+1}_SECONDS')
                 sleep(1)
+        else:
+            RCON.instance.shutdown_server(seconds=0, message='IMMEDIATE_SHUTDOWN_REQUESTED')
 
         while self._server_task.is_running:
             sleep(1)
@@ -121,6 +126,34 @@ class Server():
                 self.start_server()
             sleep(10)
 
+    def get_latest_build_version(self):
+        """
+            Retrieves the published build version and writes to file
+        """
+
+        url = f'{config["steamcmd"]["api_url"]}info/{self._app_id}'
+        response = None
+
+        for i in range(config['steamcmd']['retry_count']):
+            try:
+                log.info(f'event=server_get_latest_build_version event_details=retrieving_info url={url} attempt={i + 1}')
+                response = requests.get(url)
+
+                if not (200 <= response.status_code < 300):
+                    log.warn(f'event=server_get_latest_build_version event_result=failure event_details=bad_response_code status_code={response.status_code}')
+                else:
+                    break
+            except Exception:
+                log.warn(f'event=server_get_latest_build_version event_result=failure event_details=unable_to_reach_host url={url}', exc_info=True)
+                sleep(config['steamcmd']['retry_interval'])
+
+        if response is None:
+            log.error('event=server_get_latest_build_version event_result=error event_details=tried_too_many_times_to_retrieve_info')
+            return None
+        
+        data = response.json().get('data', {}).get(self._app_id, {})
+        return data.get('depots', {}).get('branches', {}).get('public', {}).get('buildid')
+
     def _get_build_version_from_file(self):
         if not os.path.exists(self._buildid_path):
             return None
@@ -135,31 +168,20 @@ class Server():
             log.error('event=server_get_build_version event_result=failure event_details=unable_to_read_buildinfo_file', exc_info=True)
 
         return None
-    
+
     def _update_build_version_file(self):
-        """
-            Retrieves the published build version and writes to file
-        """
-        log.info('event=server_update_build_version event_details=about_to_perform')
+        build_version = self._get_latest_build_version()
 
-        url = f'{config["steamcmd"]["api_url"]}info/{self._app_id}'
-
-        try:
-            response = requests.get(url)
-        except Exception:
-            log.error(f'event=server_update_build_version event_result=failure event_details=unable_to_reach_host url={url}', exc_info=True)
+        if build_version is None:
+            log.error('event=update_build_version_file event_result=error event_details=could_not_retrieve_latest_build_version')
             return
-
-        if not (200 <= response.status_code < 300):
-            log.error(f'event=server_update_build_version event_result=failure event_details=bad_response_code status_code={response.status_code}')
-            return
-
-        data = response.json().get('data', {}).get(self._app_id, {})
-        build_id = data.get('depots', {}).get('branches', {}).get('public', {}).get('buildid')
-        self.build_version = build_id
+        old_build_version = self.build_version
+        self.build_version = build_version
 
         if not os.path.exists(self._storage_dir):
             os.makedirs(self._storage_dir)
 
         with open(self._buildid_path, 'w') as buildinfo_file:
             buildinfo_file.write(self.build_version)
+
+        log.info(f'event=update_build_version_file event_result=success old_build_id={old_build_version} new_build_id={build_version}')

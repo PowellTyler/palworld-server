@@ -7,7 +7,7 @@ install:
 	mkdir -p /var/lib/palserver/mount/server
 	mkdir -p /var/lib/palserver/mount/storage
 	mkdir -p /var/log/$(NAME)
-	echo > /var/log/$(NAME)/access.log
+	touch /var/log/$(NAME)/access.log
 	install package/palserver.service /lib/systemd/system/palserver.service
 	cp -n package/config.ini /var/lib/palserver/mount/config/config.ini
 	podman build -t $(NAME) .

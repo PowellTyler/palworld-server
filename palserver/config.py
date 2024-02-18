@@ -27,3 +27,5 @@ config = _convert_to_dict(_config)
 config['root'] = '/var/lib/palserver'
 config['module'] = os.path.dirname(os.path.abspath(__file__))
 config['app']['auto_update'] = config['app']['auto_update'].lower() == 'false'
+config['steamcmd']['retry_count'] = int(config['steamcmd']['retry_count'])
+config['steamcmd']['retry_interval'] = int(config['steamcmd']['retry_interval'])
