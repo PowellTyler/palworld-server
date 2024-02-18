@@ -10,6 +10,6 @@ class RunServerTask(Task):
         run_server_path = f'{config["server"]["game_root"]}/{config["server"]["command_path"]}'
         command = f'su - steam -c "{run_server_path} -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS"'
         log.info(f'event=run_server_task event_details=about_to_start command={command}')
-        run_server = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE)
+        run_server = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = run_server.communicate()
         log.info(f'event=run_server_task event_details=exited stdout={out} stderr={err}')

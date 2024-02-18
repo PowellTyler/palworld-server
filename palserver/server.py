@@ -88,7 +88,7 @@ class Server():
     def install_or_update_server(self):
         log.info(f'event=server_install_or_update event_details=started game_root={self._game_root}')
         install_command = f'su - steam -c "{config["steamcmd"]["path"]} +force_install_dir \"{self._game_root}\" +login anonymous +app_update {self._app_id} validate +quit"'
-        install_process = subprocess.Popen(install_command, shell=True, stdout=subprocess.PIPE)
+        install_process = subprocess.Popen(install_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True)
         out, err = install_process.communicate()
 
         if 'Success!' in out:
