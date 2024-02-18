@@ -23,6 +23,8 @@ class RCON(metaclass=Singleton):
         full_command = ['ARRCON', '-S', self._label, rcon_command]
         process = subprocess.Popen(full_command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         out, err = process.communicate()
+
+        log.info(f'event=run_rcon_command command={full_command} stdout={out} stderr={err}')
         return out
 
     def save(self):
