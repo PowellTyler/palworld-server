@@ -1,5 +1,9 @@
 from time import sleep
 from tasks.task import Task
+from tasks.backupserver import BackupServerTask
+from tasks.checkversion import CheckVersionTask
+from tasks.saveserver import SaveServerTask
+from tasks.restartserver import RestartServerTask
 
 
 class ManageServerTask(Task):
@@ -10,4 +14,10 @@ class ManageServerTask(Task):
 
     def handler(self):
         self._server.start_server()
+
+        BackupServerTask().start()
+        CheckVersionTask.start()
+        SaveServerTask.start()
+        RestartServerTask.start()
+
         self._server.keep_alive()

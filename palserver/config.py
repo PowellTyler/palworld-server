@@ -12,6 +12,18 @@ def _convert_to_dict(config):
             d[section][key] = val
     return d
 
+
+_module_path = os.path.dirname(os.path.abspath(__file__))
+
+_base_config = configparser.ConfigParser()
+_base_config.read(os.path.join(_module_path, 'config.ini'))
+
+_config = configparser.ConfigParser()
+_config.read('/var/lib/palserver/config/config.cfg')
+
+config = _convert_to_dict(_base_config)
+config.update(_convert_to_dict(_config))
+
 # TODO: This could be generalized so that config.ini is a set of instructions on
 #       what a config is suppose to be
 #       Examples:
@@ -20,12 +32,12 @@ def _convert_to_dict(config):
 #           c = boolean(default=False)
 #           d = string_list(default=[])
 
-_config = configparser.ConfigParser()
-_config.read('/var/lib/palserver/config/config.ini')
-
-config = _convert_to_dict(_config)
+# TODO: Retrieve root from environment variable?
 config['root'] = '/var/lib/palserver'
-config['module'] = os.path.dirname(os.path.abspath(__file__))
-config['app']['auto_update'] = config['app']['auto_update'].lower() == 'false'
+config['module'] = _module_path
 config['steamcmd']['retry_count'] = int(config['steamcmd']['retry_count'])
 config['steamcmd']['retry_interval'] = int(config['steamcmd']['retry_interval'])
+config['app']['auto_update'] = int(config['app']['auto_update'])
+config['app']['auto_restart'] = int(config['app']['auto_restart'])
+config['app']['auto_save'] = int(config['app']['auto_save'])
+config['app']['auto_backup'] = int(config['app']['auto_backup'])
