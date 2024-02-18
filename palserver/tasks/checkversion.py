@@ -1,7 +1,7 @@
 import datetime
 from time import sleep
-from ..log import log
-from ..config import config
+from log import log
+from config import config
 from tasks.task import Task
 
 
