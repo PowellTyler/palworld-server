@@ -170,7 +170,7 @@ class Server():
         return None
 
     def _update_build_version_file(self):
-        build_version = self._get_latest_build_version()
+        build_version = self.get_latest_build_version()
 
         if build_version is None:
             log.error('event=update_build_version_file event_result=error event_details=could_not_retrieve_latest_build_version')
