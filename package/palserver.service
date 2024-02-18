@@ -9,7 +9,7 @@ Environment=PODMAN_SYSTEMD_UNIT=%n
 Restart=on-failure
 TimeoutStopSec=70
 ExecStartPre=/bin/rm -f %t/%n.ctr-id
-ExecStart=/usr/bin/podman run --cidfile=%t/%n.ctr-id --cgroups=no-conmon --rm --sdnotify=conmon --replace -dit -p 8211:8211/udp -v .:/usr/lib/palserver -v /var/lib/palserver/mount:/var/lib/palserver -v /var/log/palserver:/var/log/palserver --name palserver palserver
+ExecStart=/usr/bin/podman run --cidfile=/var/lib/palserver/palserver.ctr-id --cgroups=no-conmon --rm --sdnotify=conmon --replace -dit -p 8211:8211/udp -v .:/usr/lib/palserver -v /var/lib/palserver/mount:/var/lib/palserver -v /var/log/palserver:/var/log/palserver --name palserver palserver
 ExecStop=/usr/bin/podman stop --ignore --cidfile=%t/%n.ctr-id
 ExecStopPost=/usr/bin/podman rm -f --ignore --cidfile=%t/%n.ctr-id
 Type=notify
