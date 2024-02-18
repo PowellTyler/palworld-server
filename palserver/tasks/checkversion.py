@@ -32,9 +32,10 @@ class CheckVersionTask(Task):
                     log.info(f'event=check_version_task event_details=server_is_outdated old_version={self._server.build_version} new_version={latest_build_version}')
                     self._server.install_or_update_server()
                     self._server.restart_server()
-                    next_check = datetime.datetime.now() + datetime.timedelta(minutes=config['app']['auto_update'])
                 else:
                     log.info('event=check_version_task event_details=server_up_to_date')
+
+                next_check = datetime.datetime.now() + datetime.timedelta(minutes=config['app']['auto_update'])
             sleep(10)
 
         
