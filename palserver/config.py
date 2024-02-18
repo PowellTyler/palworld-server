@@ -22,7 +22,11 @@ _config = configparser.ConfigParser()
 _config.read('/var/lib/palserver/config/config.cfg')
 
 config = _convert_to_dict(_base_config)
-config.update(_convert_to_dict(_config))
+
+_modified_configs = _convert_to_dict(_config)
+for group in _modified_configs:
+    for config_key, value in _modified_configs[group].items():
+        config.setdefault(group, {}).update({config_key: value})
 
 # TODO: This could be generalized so that config.ini is a set of instructions on
 #       what a config is suppose to be
