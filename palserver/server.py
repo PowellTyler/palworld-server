@@ -18,6 +18,7 @@ class Server():
         self._buildid_path = f'{self._storage_dir}/buildid.info'
         self._game_root = config['server']['game_root']
         self._server_task = RunServerTask()
+        self._stopped = True
         self.shutdown_time = int(config['app']['shutdown_time'])
         self.build_version = self._get_build_version_from_file()
 
@@ -41,6 +42,7 @@ class Server():
 
         self.apply_config()
         self._server_task.start()
+        self._stopped = False
         log.info('event=start_server result=success')
 
     def stop_server(self, immediate=False):
@@ -76,6 +78,7 @@ class Server():
 
         log.info('event=server_shutdown event_result=success')
         self._shutdown_in_progress = False
+        self._stopped = True
 
     def restart_server(self):
         log.debug('event=server_restart event_details=about_to_perform')
@@ -103,6 +106,20 @@ class Server():
             log.info(f'event=server_apply_config event_result=success config_path={server_settings_path}')
         except Exception:
             log.error('event=server_apply_config event_result=error event_details=unknown_error_possible_missing_permissions', exc_info=True)
+
+    def keep_alive(self):
+        """
+            Tries to keep the server alive, this is ignored
+            if the server is called to be stopped
+        """
+        if self._stopped:
+            return
+
+        while True:
+            if not self._server_task.is_running and not self._stopped:
+                log.warn('event=server_keep_alive event_details=server_closed_unexpectingly')
+                self.start_server()
+            sleep(10)
 
     def _get_build_version_from_file(self):
         if not os.path.exists(self._buildid_path):

@@ -9,7 +9,7 @@ install:
 	mkdir -p /var/log/$(NAME)
 	echo > /var/log/$(NAME)/access.log
 	install package/palserver.service /lib/systemd/system/palserver.service
-	install package/config.ini /var/lib/palserver/mount/config/
+	cp -n package/config.ini /var/lib/palserver/mount/config/config.ini
 	podman build -t $(NAME) .
 
 clean: docker-stop

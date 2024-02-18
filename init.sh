@@ -5,6 +5,6 @@ install -d /etc/${APP_NAME}/
 install /usr/lib/${APP_NAME}/package/config.ini /etc/${APP_NAME}/config.ini
 
 chown steam:steam -R /home/steam/
-chown steam:steam -r /var/lib/palworld
+chown steam:steam -R /var/lib/palworld
 
 ${PYTHON} /usr/lib/${APP_NAME}/palserver

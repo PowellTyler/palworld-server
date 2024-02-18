@@ -1,4 +1,6 @@
+from time import sleep
 from tasks.task import Task
+
 
 class ManageServerTask(Task):
 
@@ -8,3 +10,4 @@ class ManageServerTask(Task):
 
     def handler(self):
         self._server.start_server()
+        self._server.keep_alive()
