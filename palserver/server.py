@@ -11,6 +11,10 @@ from tasks.runserver import RunServerTask
 
 class Server():
 
+    @property
+    def is_installed(self):
+        return os.path.exists(f'{config["server"]["game_root"]}/{config["server"]["command_path"]}')
+
     def __init__(self):
         self._app_id = config['steamcmd']['app_id']
         self._shutdown_in_progress = False
@@ -21,10 +25,6 @@ class Server():
         self._stopped = True
         self.shutdown_time = int(config['app']['shutdown_time'])
         self.build_version = self._get_build_version_from_file()
-
-    @property
-    def is_installed(self):
-        return os.path.exists(f'{config["server"]["game_root"]}/{config["server"]["command_path"]}')
 
     def start_server(self):
         if self._server_task.is_running:

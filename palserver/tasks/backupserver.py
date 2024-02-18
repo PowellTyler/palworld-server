@@ -17,13 +17,13 @@ class BackupServerTask(Task):
 
         log.info('event=backup_server_task event_details=started')
 
-        next_check = datetime.datetime.now() + datetime.timedelta(minutes=config['app']['auto_backup'])
+        next_check = datetime.datetime.now() + datetime.timedelta(hours=config['app']['auto_backup'])
 
         while True:
             if datetime.datetime.now() >= next_check:
                 log.info('event=backup_server_task event_details=about_to_perform')
                 self._perform_backup()
-                next_check = datetime.datetime.now() + datetime.timedelta(minutes=config['app']['auto_backup'])
+                next_check = datetime.datetime.now() + datetime.timedelta(hours=config['app']['auto_backup'])
             sleep(10)
 
     def _perform_backup(self):
