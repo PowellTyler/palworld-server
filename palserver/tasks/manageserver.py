@@ -16,8 +16,8 @@ class ManageServerTask(Task):
         self._server.start_server()
 
         BackupServerTask().start()
-        CheckVersionTask.start()
-        SaveServerTask.start()
-        RestartServerTask.start()
+        CheckVersionTask().start()
+        SaveServerTask().start()
+        RestartServerTask().start()
 
         self._server.keep_alive()
