@@ -31,7 +31,10 @@ class BackupServerTask(Task):
         backup_dir = config['app']['backup_dir']
         filenames = [entry.name for entry in sorted(os.scandir(backup_dir), key=lambda x: x.stat().st_mtime, reversed=True)]
 
-        for name in filenames:
+        if config['app']['backup_count'] > len(filenames):
+            return
+
+        for name in filenames[:-5]:
             os.remove(os.path.join(config['app']['backup_dir'], name))
 
     def _perform_backup(self):
