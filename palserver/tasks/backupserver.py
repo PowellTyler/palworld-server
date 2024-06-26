@@ -23,8 +23,16 @@ class BackupServerTask(Task):
             if datetime.datetime.now() >= next_check:
                 log.info('event=backup_server_task event_details=about_to_perform')
                 self._perform_backup()
+                self._clean_backup_directory()
                 next_check = datetime.datetime.now() + datetime.timedelta(hours=config['app']['auto_backup'])
             sleep(10)
+
+    def _clean_backup_directory(self):
+        backup_dir = config['app']['backup_dir']
+        filenames = [entry.name for entry in sorted(os.scandir(backup_dir), key=lambda x: x.stat().st_mtime, reversed=True)]
+
+        for name in filenames:
+            os.remove(os.path.join(config['app']['backup_dir'], name))
 
     def _perform_backup(self):
         now = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
