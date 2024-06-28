@@ -35,7 +35,7 @@ class BackupServerTask(Task):
         if backup_count > len(filenames):
             return
 
-        for name in filenames[:backup_count]:
+        for name in filenames[:-backup_count]:
             os.remove(os.path.join(config['app']['backup_dir'], name))
 
     def _perform_backup(self):
