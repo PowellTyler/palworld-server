@@ -52,5 +52,5 @@ class RCON(metaclass=Singleton):
         broadcast_message = message
         if broadcast_message is None:
             broadcast_message = f'SERVER_SHUTTING_DOWN_IN_{seconds}_SECONDS'
-        self._run('shutdown', str(seconds), message)
+        self._run('shutdown', str(seconds), broadcast_message)
         log.info(f'event=rcon_shutdown_server event_details=server_going_down shutdown_time={seconds} message={broadcast_message}')
